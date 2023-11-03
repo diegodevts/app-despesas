@@ -1,0 +1,9 @@
+.dash {
+    height: 500px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,74 @@
+thead,
+tbody {
+    margin-left: 1%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.item-update,
+select {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    outline: none;
+}
+
+.btn-save {
+    height: 24px;
+    width: 70px;
+    color: #fff;
+    background-color: teal;
+    border-style: none;
+    border-radius: 5px;
+    border: 1px solid teal;
+}
+
+.btn-cancel {
+    height: 24px;
+    width: 70px;
+    border-style: none;
+    border-radius: 5px;
+    color: #6c757d;
+    background-color: #fff;
+    border: 1px solid #6c757d;
+    margin-right: 4px
+}
+
+.btn-save:hover {
+    color: #fff;
+    background-color: rgb(17, 151, 151);
+}
+
+.btn-cancel:hover {
+    color: #fff;
+    background-color: #6c757d
+}
+
+.charts {
+    padding: 7px;
+    width: 715px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+td,
+th {
+    width: 33%;
+}
+
+table {
+    width: 100%;
+}
+
+.btn-actions {
+    border: none !important;
+    background-color: white !important;
+    margin-right: 20px
+}

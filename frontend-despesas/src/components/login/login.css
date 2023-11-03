@@ -1,14 +1,26 @@
-.container {
+.container_login {
 
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     height: 100%;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-body {
+.eye {
+    visibility: 'hidden'
+}
+
+.eye-slash {
+    visibility: visible;
+}
+
+.main_login {
+    height: 100%;
     background: linear-gradient(#6c757d, #a0acb7);
 }
 
@@ -32,10 +44,12 @@ input {
     border: 1px solid #727298;
 }
 
-.icon {
+.icon_eye,
+.icon_eye_slash {
+    color: #6c757d;
     position: absolute;
-    top: 57%;
-    right: 26px;
+    top: 52.7%;
+    margin-left: 193px;
     cursor: pointer;
 }
 
