@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import './items.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import MyContext from '../../contexts/items-context'
 import { removeExpense, updateExpense } from '../../config/http'
@@ -14,7 +14,6 @@ const Items = () => {
 
   const onSubmit = async (data) => {
     const response = await updateExpense(data, items.id)
-
     notifySuccess(response)
 
     setItems({})
@@ -29,6 +28,10 @@ const Items = () => {
 
     await search()
   }
+
+  useEffect(() => {
+    search()
+  }, [])
 
   return (
     <>
@@ -112,12 +115,27 @@ const Items = () => {
                         height: '23px'
                       }}
                     >
-                      <option value="1">Entrada</option>
-                      <option value="0">Saida</option>
+                      <option value="3">Salário</option>
+                      <option value="2">Entrada</option>
+                      <option value="1">Saida</option>
                     </select>
                     <FontAwesomeIcon
                       style={{
-                        visibility: item.type ? 'visible' : 'hidden',
+                        visibility: item.type === 3 ? 'visible' : 'hidden',
+                        position: 'absolute',
+                        height: '20px'
+                      }}
+                      className="money-bill"
+                      icon={icon({
+                        name: 'money-bill-1',
+                        style: 'solid'
+                      })}
+                      color="#198754"
+                    />
+
+                    <FontAwesomeIcon
+                      style={{
+                        visibility: item.type === 2 ? 'visible' : 'hidden',
                         position: 'absolute'
                       }}
                       className="arrow-up"
@@ -127,7 +145,7 @@ const Items = () => {
 
                     <FontAwesomeIcon
                       style={{
-                        visibility: !item.type ? 'visible' : 'hidden',
+                        visibility: item.type === 1 ? 'visible' : 'hidden',
                         position: 'absolute'
                       }}
                       className="arrow-down"

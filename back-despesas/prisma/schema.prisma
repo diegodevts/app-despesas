@@ -21,10 +21,10 @@ model User {
 }
 
 model Expenses {
-  id          String  @id @unique @default(uuid())
+  id          String @id @unique @default(uuid())
   description String
   value       Int
-  type        Boolean
+  type        Int
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String

@@ -4,32 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { useForm } from 'react-hook-form'
 import Items from '../items/items'
-import { useContext, lazy } from 'react'
+import { useContext } from 'react'
 import MyContext from '../../contexts/items-context'
 import { ToastContainer } from 'react-toastify'
 import Sidebar from '../sidebar/sidebar'
 import 'react-toastify/dist/ReactToastify.css'
-
-function setBlur(e) {
-  let sideMenu = document.querySelector('.side_menu')
-  let container = document.querySelector('.main')
-  let width = sideMenu.getAttribute('style')
-  if (!e) {
-    sideMenu.setAttribute('style', 'width: 50px; transition: .2s')
-    container.setAttribute('style', 'filter: none')
-    width = ''
-    return
-  }
-  e.preventDefault()
-  if (width && ~width.indexOf('200px')) {
-    sideMenu.setAttribute('style', 'width: 50px; transition: .2s')
-    container.setAttribute('style', 'filter: none')
-    width = ''
-  } else {
-    sideMenu.setAttribute('style', 'width: 200px; transition: .2s')
-    container.setAttribute('style', 'filter: blur(8px)')
-  }
-}
+import { setBlur } from '../../utils/set-blur'
 
 const Home = () => {
   const { register, handleSubmit, reset } = useForm()
@@ -40,11 +20,11 @@ const Home = () => {
       .map(({ value }) => value)
       .reduce((previous, current) => previous + current, 0),
     income: data
-      .filter((item) => item.type)
+      .filter((item) => item.type > 1)
       .map(({ value }) => value)
       .reduce((previous, current) => previous + current, 0),
     expenses: data
-      .filter((item) => !item.type)
+      .filter((item) => item.type === 1)
       .map(({ value }) => value)
       .reduce((previous, current) => previous + current, 0)
   }
@@ -167,8 +147,9 @@ const Home = () => {
                       borderRadius: '5px'
                     }}
                   >
-                    <option value="1">Entrada</option>
-                    <option value="0">Saida</option>
+                    <option value="3">Salário</option>
+                    <option value="2">Entrada</option>
+                    <option value="1">Saida</option>
                   </select>
                 </div>
               </div>

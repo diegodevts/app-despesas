@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 export function MyProvider({ children }) {
   const [data, setData] = useState([])
   const notifySuccess = (message) => toast.success(message)
-  const notifyError = (message) => toast.warning(message)
+  const notifyError = (message) => toast.error(message)
 
   const onSubmit = async (item) => {
     const response = await addExpense(item)
@@ -20,17 +20,14 @@ export function MyProvider({ children }) {
     setData(await getExpenses())
   }
 
-  useEffect(() => {
-    search()
-  }, [])
-
   return (
     <MyContext.Provider
       value={{
         onSubmit,
         data,
         search,
-        notifySuccess
+        notifySuccess,
+        notifyError
       }}
     >
       {children}

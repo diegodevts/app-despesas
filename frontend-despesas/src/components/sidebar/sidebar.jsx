@@ -2,27 +2,7 @@ import { Speedometer2, HouseDoor, BoxArrowLeft } from 'react-bootstrap-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { useNavigate } from 'react-router-dom'
-
-function setBlur(e) {
-  let sideMenu = document.querySelector('.side_menu')
-  let container = document.querySelector('.main')
-  let width = sideMenu.getAttribute('style')
-  if (!e) {
-    sideMenu.setAttribute('style', 'width: 50px; transition: .2s')
-    container.setAttribute('style', 'filter: none')
-    width = ''
-    return
-  }
-  e.preventDefault()
-  if (width && ~width.indexOf('200px')) {
-    sideMenu.setAttribute('style', 'width: 50px; transition: .2s')
-    container.setAttribute('style', 'filter: none')
-    width = ''
-  } else {
-    sideMenu.setAttribute('style', 'width: 200px; transition: .2s')
-    container.setAttribute('style', 'filter: blur(8px)')
-  }
-}
+import { setBlur } from '../../utils/set-blur'
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -59,7 +39,12 @@ const Sidebar = () => {
           </a>
         </li>
         <li className="item_menu">
-          <a onClick={() => navigate('/')}>
+          <a
+            onClick={() => {
+              navigate('/')
+              localStorage.clear()
+            }}
+          >
             <span className="icon ml-2">
               <BoxArrowLeft color="#fff" />
             </span>

@@ -1,16 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import './login.css'
 import { login } from '../../config/http'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import MyContext from '../../contexts/items-context'
 
 const setEye = () => {
   let password = document.getElementById('password')
-  let eye = document.querySelector('.eye')
-  let eyeSlash = document.querySelector('.eye-slash')
+  let eye = document.querySelector('.icon_eye')
+  let eyeSlash = document.querySelector('.icon_eye_slash')
 
   if (password.type === 'password') {
     password.type = 'text'
@@ -24,14 +26,27 @@ const setEye = () => {
 }
 const Login = () => {
   const { register, handleSubmit } = useForm()
+  const { notifyError } = useContext(MyContext)
   const navigate = useNavigate()
+  const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer)
+  const dispatch = useDispatch()
 
   const handleLogin = async (data) => {
-    const isLogged = await login(data.email, data.password)
+    const response = await login(data.email, data.password)
 
-    if (isLogged) {
-      navigate('/home')
+    if (!response.token) {
+      return notifyError(response.message)
     }
+
+    dispatch({
+      type: 'user/login',
+      payload: {
+        token: response.token
+      }
+    })
+
+    localStorage.setItem('token', response.token)
+    navigate('/home')
   }
 
   return (
@@ -70,8 +85,6 @@ const Login = () => {
                   />
                 </label>
 
-                {/* <fa-icon class="icon" (click)="set()" *ngIf="!iconOf" [icon]="faEyeSlash"></fa-icon> */}
-
                 <button
                   className="btn btn-outline-secondary mt-4 w-100"
                   onClick={(e) => {
@@ -81,6 +94,7 @@ const Login = () => {
                 >
                   Entrar
                 </button>
+                <ToastContainer autoClose={2000} />
               </div>
             </div>
           </form>
