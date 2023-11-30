@@ -23,10 +23,26 @@ export class ExpensePrismaRepository implements ExpenseRepository {
     return expense
   }
 
-  async findMany(user_id: string): Promise<Expenses[]> {
-    const expense = await prismaClient.expenses.findMany({ where: { user_id } })
+  async findMany({
+    user_id,
+    month
+  }: {
+    user_id: string
+    month: string
+  }): Promise<Expenses[]> {
+    const currentMonth = new Date().getMonth()
 
-    return expense
+    const expenses = await prismaClient.expenses.findMany({
+      where: { user_id }
+    })
+
+    const expensesByMonth = expenses.filter((expense) =>
+      month
+        ? expense.created_at.getMonth() == +month
+        : expense.created_at.getMonth() == currentMonth
+    )
+
+    return expensesByMonth
   }
 
   async update(

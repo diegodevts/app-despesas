@@ -11,8 +11,8 @@ export class ExpenseService {
     return { expense }
   }
 
-  async findMany(user_id: string) {
-    const expenses = await this.repository.findMany(user_id)
+  async findMany({ user_id, month }: { user_id: string; month: string }) {
+    const expenses = await this.repository.findMany({ user_id, month })
 
     return expenses
   }

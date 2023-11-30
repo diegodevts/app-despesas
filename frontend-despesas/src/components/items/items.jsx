@@ -7,7 +7,7 @@ import MyContext from '../../contexts/items-context'
 import { removeExpense, updateExpense } from '../../config/http'
 import { ToastContainer } from 'react-toastify'
 
-const Items = () => {
+const Items = ({ month }) => {
   const { data, search, notifySuccess } = useContext(MyContext)
   const { register, handleSubmit, setValue, reset } = useForm()
   const [items, setItems] = useState({})
@@ -18,7 +18,7 @@ const Items = () => {
 
     setItems({})
     reset({ description: '', value: '', type: '' })
-    await search()
+    await search(month)
   }
 
   const handleDelete = async (id) => {
@@ -26,12 +26,12 @@ const Items = () => {
 
     notifySuccess(response)
 
-    await search()
+    await search(month)
   }
 
   useEffect(() => {
-    search()
-  }, [])
+    search(month)
+  }, [month])
 
   return (
     <>

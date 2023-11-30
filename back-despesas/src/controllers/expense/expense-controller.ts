@@ -8,11 +8,11 @@ export class ExpenseController {
 
   async add(request: Request, response: Response) {
     try {
-      await this.service.add(request.body)
+      const expenses = await this.service.add(request.body)
 
       return response
         .status(201)
-        .send({ message: 'Item adicionado com sucesso!' })
+        .send({ message: 'Item adicionado com sucesso!', expenses })
     } catch (error) {
       return response.status(500).send({ message: 'Internal server error' })
     }
@@ -21,7 +21,11 @@ export class ExpenseController {
   async findMany(request: Request, response: Response) {
     try {
       const { user_id } = request.body
-      const expenses = await this.service.findMany(user_id)
+      const { month } = request.query
+      const expenses = await this.service.findMany({
+        user_id,
+        month: month as string
+      })
 
       return response.send({ expenses })
     } catch (error) {

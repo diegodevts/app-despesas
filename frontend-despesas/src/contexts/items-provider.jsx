@@ -13,11 +13,13 @@ export function MyProvider({ children }) {
 
     //retornar a resposta
     notifySuccess(response)
-    await search()
+    await search('')
   }
 
-  const search = async () => {
-    setData(await getExpenses())
+  const search = async (month) => {
+    const expenses = await getExpenses(month)
+
+    setData(expenses)
   }
 
   return (

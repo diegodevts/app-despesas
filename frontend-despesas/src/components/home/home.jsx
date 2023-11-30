@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './home.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
@@ -10,10 +10,14 @@ import { ToastContainer } from 'react-toastify'
 import Sidebar from '../sidebar/sidebar'
 import 'react-toastify/dist/ReactToastify.css'
 import { setBlur } from '../../utils/set-blur'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const Home = () => {
   const { register, handleSubmit, reset } = useForm()
+  const currentMonth = new Date().getMonth()
   const { onSubmit, data } = useContext(MyContext)
+  const [month, setMonth] = useState(currentMonth)
 
   const balance = {
     currentBalance: data
@@ -28,12 +32,41 @@ const Home = () => {
       .map(({ value }) => value)
       .reduce((previous, current) => previous + current, 0)
   }
+  const months = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ]
 
   return (
     <>
       <Sidebar />
       <div className="main" onMouseDown={(e) => setBlur((e = !e))}>
         <div className="container" style={{ marginLeft: '28%' }}>
+          <select
+            aria-label="Default select example"
+            defaultValue={currentMonth}
+            onChange={(e) => setMonth(e.target.value)}
+            style={{
+              width: '148px',
+              height: '31px',
+              borderRadius: '5px'
+            }}
+          >
+            {months.map((month, index) => {
+              return <option value={index}>{month}</option>
+            })}
+          </select>
+
           <h5 className="text-center" style={{ width: '690px' }}>
             Home
           </h5>
@@ -170,7 +203,7 @@ const Home = () => {
             </form>
           </div>
 
-          <Items />
+          <Items month={month} />
         </div>
       </div>
     </>

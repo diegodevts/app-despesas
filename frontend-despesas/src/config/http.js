@@ -32,6 +32,8 @@ export async function addExpense(data) {
 }
 
 export async function updateExpense(data, id) {
+  const token = localStorage.getItem('token')
+
   const request = await axios
     .put(`${URL}/expense/update/${id}`, data, {
       headers: {
@@ -63,9 +65,11 @@ export async function removeExpense(id) {
   return request.data.message
 }
 
-export async function getExpenses() {
+export async function getExpenses(month) {
+  const token = localStorage.getItem('token')
+
   const request = await axios
-    .get(`${URL}/expense/all`, {
+    .get(`${URL}/expense/all?month=${month}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
